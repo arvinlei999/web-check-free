@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { LoadingState } from 'components/misc/ProgressBar';
-import { AddressType } from 'utils/address-type-checker';
+import type { LoadingState } from 'web-check-live/components/misc/ProgressBar';
+import type { AddressType } from 'web-check-live/utils/address-type-checker';
 
 interface UseIpAddressProps<ResultType = any> {
   // Unique identifier for this job type
@@ -47,6 +47,10 @@ const useMotherOfAllHooks = <ResultType = any>(params: UseIpAddressProps<ResultT
         } else {
           updateLoadingJobs(jobId, 'error', res.error, reset);
         }
+      } else if (res.errorType && res.errorMessage) {
+        const errorMessage = `${res.errorType}\n${res.errorMessage}\n\n`
+        + `This sometimes occurs on Netlify if using the free plan. You may need to upgrade to use lambda functions`;
+        updateLoadingJobs(jobId, 'error', errorMessage, reset);
       } else if (res.skipped) { // Response returned a skipped message
         updateLoadingJobs(jobId, 'skipped', res.skipped, reset);
       } else { // Yay, everything went to plan :)
