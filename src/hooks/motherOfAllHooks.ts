@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import type { LoadingState } from 'web-check-live/components/misc/ProgressBar';
-import type { AddressType } from 'web-check-live/utils/address-type-checker';
+import { LoadingState } from 'components/misc/ProgressBar';
+import { AddressType } from 'utils/address-type-checker';
 
 interface UseIpAddressProps<ResultType = any> {
   // Unique identifier for this job type
